@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Launcher icon background: school blue (placeholder until the official logo is supplied). -->
+    <color name="ic_launcher_background">#1BA1E2</color>
+</resources>

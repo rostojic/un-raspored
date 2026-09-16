@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Base application theme. The visual styling is driven by Compose Material 3
+      (see RasporedTheme). This XML theme mainly provides a Material 3 base and a
+      splash/window background before Compose takes over.
+    -->
+    <style name="Theme.Raspored" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

@@ -1,0 +1,285 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Scaffold the Android Gradle project": [
+      {
+        "executionId": "8d2ae927-4820-457d-82ad-dbe9fd2ac29d",
+        "chatSessionId": "sess_bf59a119-5f42-4292-9e2d-7910d4c1fe81",
+        "timestamp": 1789589146615
+      },
+      {
+        "executionId": "8d2ae927-4820-457d-82ad-dbe9fd2ac29d",
+        "chatSessionId": "sess_bf59a119-5f42-4292-9e2d-7910d4c1fe81",
+        "timestamp": 1789589755057
+      }
+    ],
+    "2.1 Create enums and core data models": [
+      {
+        "executionId": "ee01696e-518f-4433-900b-def9745125ce",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789589827383
+      },
+      {
+        "executionId": "ee01696e-518f-4433-900b-def9745125ce",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789589949887
+      }
+    ],
+    "2. Implement domain data models, enums, and fixed group membership": [
+      {
+        "executionId": "ee01696e-518f-4433-900b-def9745125ce",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789589949929
+      }
+    ],
+    "3.1 Create the TimetableData object": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590036091
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590131615
+      }
+    ],
+    "3. Implement the hardcoded TimetableData constants": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590131652
+      }
+    ],
+    "4.1 Create the repository interface and constant-backed implementation": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146147
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590164769
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590281205
+      }
+    ],
+    "5.1 Create the WeekTypeCalculator object": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146204
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590165684
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590280307
+      }
+    ],
+    "6.1 Create the ShiftResolver object": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146237
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590166449
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590279347
+      }
+    ],
+    "7.1 Create the ScheduleService class": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146276
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590285785
+      },
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590371379
+      }
+    ],
+    "9. Checkpoint - Ensure all domain tests pass": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146305
+      }
+    ],
+    "10.1 Create ScheduleViewModel and DailyUiState mapping": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146339
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789593826658
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594027000
+      }
+    ],
+    "11.1 Create DailyScreen": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146374
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594031854
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594178606
+      }
+    ],
+    "12.1 Create CalendarScreen": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146421
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594032813
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594179204
+      }
+    ],
+    "13.1 Assemble MainActivity, navigation, and dependency wiring": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146455
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594185070
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594313778
+      }
+    ],
+    "15.1 Build, run tests, and produce the installable debug APK": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146486
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594319866
+      },
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594547258
+      }
+    ],
+    "16. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590146515
+      }
+    ],
+    "6. Implement ShiftResolver": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590279383
+      }
+    ],
+    "5. Implement WeekTypeCalculator": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590280345
+      }
+    ],
+    "4. Implement TimetableRepository with startup self-check": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590281260
+      }
+    ],
+    "7. Implement ScheduleService": [
+      {
+        "executionId": "bf86ddf7-b43b-415a-81b5-adc49784658a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789590371416
+      }
+    ],
+    "10. Implement ScheduleViewModel with injected Clock and navigation": [
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594027065
+      }
+    ],
+    "11. Implement the DailyScreen composable": [
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594178677
+      }
+    ],
+    "12. Implement the CalendarScreen composable": [
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594179242
+      }
+    ],
+    "13. Wire the single-Activity navigation": [
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594313823
+      }
+    ],
+    "15. Final assembly and verification": [
+      {
+        "executionId": "2fcd73a9-f85d-43da-a331-9e3b79d3e42a",
+        "chatSessionId": "sess_05ebfc4a-67ea-4fe8-9f8a-dd48261c4a09",
+        "timestamp": 1789594547348
+      }
+    ]
+  }
+}

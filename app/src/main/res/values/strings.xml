@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Raspored</string>
+
+    <!--
+      Serbian labels for the Daily/Calendar screens. Weekday names are Latin per
+      the design; shift labels are Cyrillic per the requirements.
+    -->
+
+    <!-- Weekday names (Monday..Sunday) -->
+    <string name="day_monday">Ponedeljak</string>
+    <string name="day_tuesday">Utorak</string>
+    <string name="day_wednesday">Sreda</string>
+    <string name="day_thursday">Cetvrtak</string>
+    <string name="day_friday">Petak</string>
+    <string name="day_saturday">Subota</string>
+    <string name="day_sunday">Nedelja</string>
+
+    <!-- Group labels -->
+    <string name="group_parna">Parna</string>
+    <string name="group_neparna">Neparna</string>
+
+    <!-- Shift labels (Cyrillic, short form) -->
+    <string name="shift_morning">ПРЕПОДНЕ</string>
+    <string name="shift_afternoon">ПОПОДНЕ</string>
+
+    <!-- Daily messages -->
+    <string name="message_weekend">Nema nastave (vikend).</string>
+    <string name="message_no_classes">Nema zakazane nastave za ovaj dan.</string>
+    <string name="message_data_unavailable">Podaci rasporeda nisu dostupni.</string>
+    <string name="message_date_undetermined">Trenutni datum nije moguce odrediti.</string>
+
+    <!-- Period row / pause -->
+    <string name="pause_label">Pauza (nema casa)</string>
+
+    <!-- Navigation controls -->
+    <string name="action_previous_day">Prethodni dan</string>
+    <string name="action_next_day">Sledeci dan</string>
+    <string name="action_open_calendar">Kalendar</string>
+
+    <!-- Content descriptions for shift icons -->
+    <string name="shift_morning_icon_desc">Prepodnevna smena</string>
+    <string name="shift_afternoon_icon_desc">Popodnevna smena</string>
+</resources>
