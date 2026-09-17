@@ -65,7 +65,8 @@ import java.time.format.DateTimeFormatter
  *   selected date in short numeric form, e.g. "Utorak - Neparna - 15.09.'27.".
  *   (Req 1.3)
  * - A shift label is shown when a shift applies, preceded by a sun (morning) or
- *   moon (afternoon) icon. (Req 1.4)
+ *   moon (afternoon) icon, and followed by the HH:mm start time of the day's
+ *   first period when the day has any. (Req 1.4, Feature 2)
  * - When [DailyUiState.message] is non-null the corresponding message is shown
  *   and the period list is omitted. (Req 1.6, 1.7)
  * - Otherwise the resolved lessons are rendered in the given (ascending) order,
@@ -201,7 +202,8 @@ private fun DailyHeader(state: DailyUiState) {
             style = MaterialTheme.typography.headlineSmall
         )
 
-        // Shift label with a sun (morning) / moon (afternoon) icon. (Req 1.4)
+        // Shift label with a sun (morning) / moon (afternoon) icon, followed by
+        // the start time of the day's first period when there is one. (Req 1.4, Feature 2)
         state.shift?.let { shift ->
             Spacer(Modifier.height(6.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -217,6 +219,17 @@ private fun DailyHeader(state: DailyUiState) {
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
+
+                // Start time of the earliest period scheduled that day; omitted
+                // when the day has no periods. (Feature 2)
+                state.lessons.minByOrNull { it.period }?.let { first ->
+                    Spacer(Modifier.width(12.dp))
+                    Text(
+                        text = formatTime(first.start),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }
