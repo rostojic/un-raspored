@@ -18,14 +18,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -64,46 +74,102 @@ import java.time.format.DateTimeFormatter
  *   visible no-class indication. (Req 1.5)
  * - Prev/next controls call [onPreviousDay]/[onNextDay]; a calendar action calls
  *   [onOpenCalendar]. (Req 3.2, 3.3)
+ * - A top app bar overflow menu (⋮) exposes "Подешавања" (Settings) and
+ *   "Измени распоред" (Edit schedule), calling [onOpenSettings]/[onOpenEditor].
+ *   (Req 7.2, 8.2)
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DailyScreen(
     state: DailyUiState,
     onPreviousDay: () -> Unit,
     onNextDay: () -> Unit,
     onOpenCalendar: () -> Unit,
+    onOpenSettings: () -> Unit,
+    onOpenEditor: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
-        DailyHeader(state)
-
-        Spacer(Modifier.height(16.dp))
-
-        // Body: either a message (weekend / no classes / errors) or the period list.
-        val message = state.message
-        if (message != null) {
-            Text(
-                text = stringResource(message.stringRes()),
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(top = 32.dp)
-            )
-        } else {
-            LessonList(
-                lessons = state.lessons,
-                modifier = Modifier.weight(1f)
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        if (state.owner.isNotBlank()) {
+                            stringResource(R.string.app_bar_title_owner, state.owner)
+                        } else {
+                            stringResource(R.string.app_bar_title)
+                        }
+                    )
+                },
+                actions = {
+                    var menuExpanded by remember { mutableStateOf(false) }
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(
+                            imageVector = Icons.Filled.MoreVert,
+                            contentDescription = stringResource(R.string.action_menu)
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.menu_settings)) },
+                            onClick = {
+                                menuExpanded = false
+                                onOpenSettings()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.menu_edit_schedule)) },
+                            onClick = {
+                                menuExpanded = false
+                                onOpenEditor()
+                            }
+                        )
+                    }
+                }
             )
         }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(16.dp)
+        ) {
+            DailyHeader(state)
 
-        Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(16.dp))
 
-        NavigationControls(
-            onPreviousDay = onPreviousDay,
-            onNextDay = onNextDay,
-            onOpenCalendar = onOpenCalendar
-        )
+            // Body: either a message (weekend / no classes / errors) or the period list.
+            val message = state.message
+            if (message != null) {
+                Text(
+                    text = stringResource(message.stringRes()),
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(top = 32.dp)
+                )
+            } else {
+                LessonList(
+                    lessons = state.lessons,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            NavigationControls(
+                onPreviousDay = onPreviousDay,
+                onNextDay = onNextDay,
+                onOpenCalendar = onOpenCalendar
+            )
+        }
     }
 }
 
@@ -112,7 +178,7 @@ fun DailyScreen(
  * two-digit year prefixed with an apostrophe. Locale-independent.
  */
 private val HEADER_DATE_FORMATTER: DateTimeFormatter =
-    DateTimeFormatter.ofPattern("dd.MM.''yy.")
+    DateTimeFormatter.ofPattern("dd.MM.yy")
 
 /**
  * Weekday, optional group, and the selected date, plus the optional shift row
@@ -121,14 +187,14 @@ private val HEADER_DATE_FORMATTER: DateTimeFormatter =
 @Composable
 private fun DailyHeader(state: DailyUiState) {
     Column {
-        // Weekday, group when present, and the short numeric date, joined by a
-        // middle dot, e.g. "Utorak - Neparna - 15.09.'27.". (Req 1.3)
-        val weekday = stringResource(state.dayOfWeek.stringRes())
+        // Abbreviated Cyrillic weekday, group when present, and the short
+        // numeric date, space-separated, e.g. "Чет Парна 17.09.26". (Req 1.3)
+        val weekday = stringResource(state.dayOfWeek.abbrStringRes())
         val dateText = state.date.format(HEADER_DATE_FORMATTER)
         val headerText = buildString {
             append(weekday)
-            state.group?.let { append(" \u00B7 ").append(groupText(it)) }
-            append(" \u00B7 ").append(dateText)
+            state.group?.let { append(" ").append(groupText(it)) }
+            append(" ").append(dateText)
         }
         Text(
             text = headerText,
@@ -274,6 +340,18 @@ private fun DayOfWeek.stringRes(): Int = when (this) {
     DayOfWeek.SUNDAY -> R.string.day_sunday
 }
 
+/** Maps a [DayOfWeek] to its abbreviated Cyrillic weekday string resource. (Feature 1) */
+@StringRes
+private fun DayOfWeek.abbrStringRes(): Int = when (this) {
+    DayOfWeek.MONDAY -> R.string.day_abbr_monday
+    DayOfWeek.TUESDAY -> R.string.day_abbr_tuesday
+    DayOfWeek.WEDNESDAY -> R.string.day_abbr_wednesday
+    DayOfWeek.THURSDAY -> R.string.day_abbr_thursday
+    DayOfWeek.FRIDAY -> R.string.day_abbr_friday
+    DayOfWeek.SATURDAY -> R.string.day_abbr_saturday
+    DayOfWeek.SUNDAY -> R.string.day_abbr_sunday
+}
+
 /** Resolves the localized group label for a [DayGroup]. (Req 1.3) */
 @Composable
 private fun groupText(group: DayGroup): String = stringResource(
@@ -328,11 +406,14 @@ private fun DailyScreenPreview() {
                         ResolvedLesson(2, "6/1", LocalTime.of(14, 50), LocalTime.of(15, 35)),
                         ResolvedLesson(3, "8/5", LocalTime.of(15, 55), LocalTime.of(16, 40))
                     ),
-                    message = null
+                    message = null,
+                    owner = "Оливера"
                 ),
                 onPreviousDay = {},
                 onNextDay = {},
-                onOpenCalendar = {}
+                onOpenCalendar = {},
+                onOpenSettings = {},
+                onOpenEditor = {}
             )
         }
     }

@@ -1,45 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App -->
+    <!-- App (launcher label kept in Latin per request) -->
     <string name="app_name">Raspored</string>
 
-    <!--
-      Serbian labels for the Daily/Calendar screens. Weekday names are Latin per
-      the design; shift labels are Cyrillic per the requirements.
-    -->
+    <!-- Weekday names, full (Cyrillic) -->
+    <string name="day_monday">Понедељак</string>
+    <string name="day_tuesday">Уторак</string>
+    <string name="day_wednesday">Среда</string>
+    <string name="day_thursday">Четвртак</string>
+    <string name="day_friday">Петак</string>
+    <string name="day_saturday">Субота</string>
+    <string name="day_sunday">Недеља</string>
 
-    <!-- Weekday names (Monday..Sunday) -->
-    <string name="day_monday">Ponedeljak</string>
-    <string name="day_tuesday">Utorak</string>
-    <string name="day_wednesday">Sreda</string>
-    <string name="day_thursday">Cetvrtak</string>
-    <string name="day_friday">Petak</string>
-    <string name="day_saturday">Subota</string>
-    <string name="day_sunday">Nedelja</string>
+    <!-- Weekday abbreviations, Cyrillic (used in the Daily header) -->
+    <string name="day_abbr_monday">ПОН</string>
+    <string name="day_abbr_tuesday">УТО</string>
+    <string name="day_abbr_wednesday">СРЕ</string>
+    <string name="day_abbr_thursday">ЧЕТ</string>
+    <string name="day_abbr_friday">ПЕТ</string>
+    <string name="day_abbr_saturday">СУБ</string>
+    <string name="day_abbr_sunday">НЕД</string>
 
-    <!-- Group labels -->
-    <string name="group_parna">Parna</string>
-    <string name="group_neparna">Neparna</string>
+    <!-- Group labels, Cyrillic -->
+    <string name="group_parna">Парна</string>
+    <string name="group_neparna">Непарна</string>
 
     <!-- Shift labels (Cyrillic, short form) -->
     <string name="shift_morning">ПРЕПОДНЕ</string>
     <string name="shift_afternoon">ПОПОДНЕ</string>
 
-    <!-- Daily messages -->
-    <string name="message_weekend">Nema nastave (vikend).</string>
-    <string name="message_no_classes">Nema zakazane nastave za ovaj dan.</string>
-    <string name="message_data_unavailable">Podaci rasporeda nisu dostupni.</string>
-    <string name="message_date_undetermined">Trenutni datum nije moguce odrediti.</string>
+    <!-- Daily messages (Cyrillic) -->
+    <string name="message_weekend">Нема наставе (викенд).</string>
+    <string name="message_no_classes">Нема заказане наставе за овај дан.</string>
+    <string name="message_data_unavailable">Подаци распореда нису доступни.</string>
+    <string name="message_date_undetermined">Тренутни датум није могуће одредити.</string>
 
-    <!-- Period row / pause -->
-    <string name="pause_label">Pauza (nema casa)</string>
+    <!-- Period row / pause (Cyrillic) -->
+    <string name="pause_label">Пауза (нема часа)</string>
 
-    <!-- Navigation controls -->
-    <string name="action_previous_day">Prethodni dan</string>
-    <string name="action_next_day">Sledeci dan</string>
-    <string name="action_open_calendar">Kalendar</string>
+    <!-- Navigation controls (Cyrillic) -->
+    <string name="action_previous_day">Претходни дан</string>
+    <string name="action_next_day">Следећи дан</string>
+    <string name="action_open_calendar">Календар</string>
 
-    <!-- Content descriptions for shift icons -->
-    <string name="shift_morning_icon_desc">Prepodnevna smena</string>
-    <string name="shift_afternoon_icon_desc">Popodnevna smena</string>
+    <!-- Content descriptions for shift icons (Cyrillic) -->
+    <string name="shift_morning_icon_desc">Преподневна смена</string>
+    <string name="shift_afternoon_icon_desc">Поподневна смена</string>
+
+    <!-- Daily top app bar and overflow menu -->
+    <string name="app_bar_title">Распоред</string>
+    <string name="app_bar_title_owner">Распоред-%1$s</string>
+    <string name="action_menu">Мени</string>
+    <string name="menu_settings">Подешавања</string>
+    <string name="menu_edit_schedule">Измени распоред</string>
+
+    <!-- Navigation -->
+    <string name="action_back">Назад</string>
+
+    <!-- Settings screen -->
+    <string name="settings_owner_label">Име (власник распореда)</string>
+    <string name="settings_owner_current">Тренутно: %1$s</string>
+    <string name="owner_error_empty">Име не може бити празно</string>
+    <string name="owner_error_too_long">Име сме имати највише 50 карактера</string>
+    <string name="action_save">Сачувај</string>
+
+    <!-- Schedule editor screen -->
+    <string name="editor_title">Измени распоред</string>
+    <string name="group_parna_upper">ПАРНА</string>
+    <string name="group_neparna_upper">НЕПАРНА</string>
+    <string name="editor_class_code_label">Одељење</string>
+    <string name="class_code_error_too_long">Највише 20 карактера</string>
+    <string name="action_revert">Врати претходни</string>
+    <string name="save_failed">Чување није успело</string>
+    <string name="notice_saved">Распоред је сачуван</string>
+    <string name="notice_reverted">Враћен претходни распоред</string>
+    <string name="notice_no_previous">Нема претходног распореда</string>
+
+    <!-- Weekday full names, Cyrillic (editor section headers) -->
+    <string name="day_cyr_monday">Понедељак</string>
+    <string name="day_cyr_tuesday">Уторак</string>
+    <string name="day_cyr_wednesday">Среда</string>
+    <string name="day_cyr_thursday">Четвртак</string>
+    <string name="day_cyr_friday">Петак</string>
+    <string name="day_cyr_saturday">Субота</string>
+    <string name="day_cyr_sunday">Недеља</string>
 </resources>

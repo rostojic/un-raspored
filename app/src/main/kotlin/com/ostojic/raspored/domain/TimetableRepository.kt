@@ -14,6 +14,14 @@ interface TimetableRepository {
     /** Ordered lessons for a weekday, independent of WeekType. Empty for weekends. (Req 5.1, 5.2) */
     fun lessonsFor(dayOfWeek: DayOfWeek): List<Lesson>
 
+    /**
+     * The [DayGroup] assigned to a weekday in the current [StoredSchedule].
+     *
+     * Returns `null` for weekends and any day not present in the assignment.
+     * (Req 8.6, 8.13)
+     */
+    fun groupFor(dayOfWeek: DayOfWeek): DayGroup?
+
     /** Bell times for a shift, keyed by period number. (Req 5.3, 5.4) */
     fun bellTimesFor(shift: Shift): Map<Int, BellTime>
 
@@ -31,16 +39,36 @@ sealed interface TimetableLoadResult {
 }
 
 /**
- * A [TimetableRepository] backed by the compiled-in [TimetableData] constants.
+ * A [TimetableRepository] backed by an in-memory [StoredSchedule] snapshot.
  *
- * Reads are direct lookups into the constant maps. [load] runs a lightweight
- * self-check that can only fail from a programming defect in the tables; it
- * returns [TimetableLoadResult.Unavailable] rather than throwing.
+ * Lesson and group reads resolve against a mutable snapshot that defaults to
+ * [DEFAULT_SCHEDULE] and is refreshed via [updateSnapshot] (the target the
+ * `SettingsRepository` snapshot sink calls when persisted edits change). Bell
+ * times remain sourced from the compiled-in [TimetableData] constants. [load]
+ * runs a lightweight self-check against the current snapshot; it returns
+ * [TimetableLoadResult.Unavailable] rather than throwing.
  */
 class ConstantTimetableRepository : TimetableRepository {
 
+    /** The current schedule snapshot; starts from the seed [DEFAULT_SCHEDULE]. */
+    @Volatile
+    private var snapshot: StoredSchedule = DEFAULT_SCHEDULE
+
+    /**
+     * Replaces the in-memory [snapshot] with [schedule].
+     *
+     * Wired as the `SettingsRepository` snapshot sink (task 25) so persisted
+     * user edits become visible to subsequent [lessonsFor]/[groupFor] reads.
+     */
+    fun updateSnapshot(schedule: StoredSchedule) {
+        snapshot = schedule
+    }
+
     override fun lessonsFor(dayOfWeek: DayOfWeek): List<Lesson> =
-        TimetableData.LESSONS[dayOfWeek] ?: emptyList()
+        snapshot.lessonsByDay[dayOfWeek] ?: emptyList()
+
+    override fun groupFor(dayOfWeek: DayOfWeek): DayGroup? =
+        snapshot.groupByDay[dayOfWeek]
 
     override fun bellTimesFor(shift: Shift): Map<Int, BellTime> =
         when (shift) {
@@ -49,12 +77,15 @@ class ConstantTimetableRepository : TimetableRepository {
         }
 
     /**
-     * Verifies the constant tables are loadable and consistent. (Req 5.7)
+     * Verifies the current snapshot is loadable and consistent. (Req 5.7)
      *
      * Returns [TimetableLoadResult.Unavailable] on the first failed invariant,
      * otherwise [TimetableLoadResult.Available]. The valid period range is 1..7.
+     * Lesson invariants read from the current [snapshot]; bell-time invariants
+     * read from the [TimetableData] bell constants.
      */
     override fun load(): TimetableLoadResult {
+        val current = snapshot
         val weekdays = listOf(
             DayOfWeek.MONDAY,
             DayOfWeek.TUESDAY,
@@ -65,7 +96,7 @@ class ConstantTimetableRepository : TimetableRepository {
 
         // Invariant 1: every weekday has ≥1 lesson, each within periods 1..7.
         for (day in weekdays) {
-            val lessons = TimetableData.LESSONS[day] ?: emptyList()
+            val lessons = current.lessonsByDay[day] ?: emptyList()
             if (lessons.isEmpty()) {
                 return TimetableLoadResult.Unavailable("No lessons defined for $day")
             }
@@ -80,7 +111,7 @@ class ConstantTimetableRepository : TimetableRepository {
 
         // Invariant 2: every referenced period has a bell time in both shifts.
         val referencedPeriods = weekdays
-            .flatMap { TimetableData.LESSONS[it] ?: emptyList() }
+            .flatMap { current.lessonsByDay[it] ?: emptyList() }
             .map { it.period }
             .toSortedSet()
         for (period in referencedPeriods) {

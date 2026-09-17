@@ -32,6 +32,8 @@ import java.time.LocalDate
  * @param message a non-null [DailyMessage] shown in place of the period list
  *   (weekend, no classes, data unavailable, or date undetermined); `null` when a
  *   normal period list is shown.
+ * @param owner the schedule owner's name, used to compose the Daily top app bar
+ *   title as "Распоред-<owner>"; empty when no owner is set.
  */
 data class DailyUiState(
     val date: LocalDate,
@@ -39,5 +41,6 @@ data class DailyUiState(
     val group: DayGroup?,
     val shift: Shift?,
     val lessons: List<ResolvedLesson>,
-    val message: DailyMessage?
+    val message: DailyMessage?,
+    val owner: String = ""
 )

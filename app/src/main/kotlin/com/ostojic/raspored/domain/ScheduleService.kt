@@ -7,9 +7,10 @@ import java.time.LocalDate
  * Assembles the fully resolved [DaySchedule] for any calendar date.
  *
  * Composes the domain rules end to end: [WeekTypeCalculator] fixes the week's
- * [WeekType], [DAY_GROUP] maps the weekday to its [DayGroup], [ShiftResolver]
- * picks the [Shift], and the [TimetableRepository] supplies the WeekType-
- * independent lessons plus the shift-specific bell times.
+ * [WeekType], the stored group assignment via [TimetableRepository.groupFor]
+ * (falling back to [DAY_GROUP]) maps the weekday to its [DayGroup],
+ * [ShiftResolver] picks the [Shift], and the [TimetableRepository] supplies the
+ * WeekType-independent lessons plus the shift-specific bell times.
  *
  * Class codes are taken solely from [TimetableRepository.lessonsFor], which is
  * WeekType-independent, so only the clock times vary between WeekType "A" and
@@ -32,7 +33,7 @@ class ScheduleService(private val repository: TimetableRepository) {
         if (isWeekend) {
             return DaySchedule(date, dow, true, group = null, weekType, shift = null, lessons = emptyList())
         }
-        val group = DAY_GROUP.getValue(dow)
+        val group = repository.groupFor(dow) ?: DAY_GROUP.getValue(dow)
         val shift = ShiftResolver.shiftFor(group, weekType)
         val bells = repository.bellTimesFor(shift)              // Req 2.7 applies shift bell times
         val lessons = repository.lessonsFor(dow)                // fixed, WeekType-independent (Req 2.8)

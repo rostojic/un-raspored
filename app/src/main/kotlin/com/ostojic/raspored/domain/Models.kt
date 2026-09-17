@@ -1,5 +1,6 @@
 package com.ostojic.raspored.domain
 
+import kotlinx.serialization.Serializable
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -32,6 +33,7 @@ enum class Shift { MORNING, AFTERNOON }
  * @param classCode the class/group code taught (e.g. "5/4"); `null` denotes a
  *   pause (no class that period).
  */
+@Serializable
 data class Lesson(
     val period: Int,          // 1..7
     val classCode: String?    // e.g. "5/4"; null => Pause

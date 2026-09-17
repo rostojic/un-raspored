@@ -1,6 +1,8 @@
 package com.ostojic.raspored.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ostojic.raspored.data.SettingsRepository
 import com.ostojic.raspored.domain.DailyMessage
 import com.ostojic.raspored.domain.DaySchedule
 import com.ostojic.raspored.domain.ScheduleService
@@ -9,6 +11,7 @@ import com.ostojic.raspored.domain.TimetableRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.time.Clock
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -26,10 +29,17 @@ import java.time.LocalDate
  * State is computed synchronously on the calling thread on every date change,
  * so tests can read [uiState]`.value` immediately after invoking a navigation
  * method. (Requirement 3, 4, 6.2, 6.4)
+ *
+ * The ViewModel also observes [SettingsRepository.state] and recomputes the
+ * current [DailyUiState] on each emission, so a stored-schedule edit/save/revert
+ * is reflected in the Daily view automatically. The repository snapshot itself
+ * is refreshed by [SettingsRepository] (via its snapshot sink); this ViewModel
+ * only re-reads through the already-updated snapshot. (Requirement 8.12, 3.1, 6.2)
  */
 class ScheduleViewModel(
     private val scheduleService: ScheduleService,
     private val repository: TimetableRepository,
+    private val settingsRepository: SettingsRepository,
     private val clock: Clock = Clock.systemDefaultZone()
 ) : ViewModel() {
 
@@ -43,6 +53,17 @@ class ScheduleViewModel(
 
     /** Current Daily view state. */
     val uiState: StateFlow<DailyUiState> = _uiState.asStateFlow()
+
+    init {
+        // Reflect stored-schedule changes (edit/save/revert) in the Daily view.
+        // The repository snapshot is already updated by SettingsRepository's own
+        // collector; here we just recompute the current state from that snapshot
+        // on every emission. StateFlow replays its latest value on collection,
+        // so this harmlessly recomputes once at startup too. (Req 8.12)
+        viewModelScope.launch {
+            settingsRepository.state.collect { refresh() }
+        }
+    }
 
     /**
      * Sets the selected date to the current system date and renders it.
@@ -99,6 +120,9 @@ class ScheduleViewModel(
         _uiState.value = mapToUiState(selectedDate)
     }
 
+    /** Current schedule owner name, used to compose the Daily top app bar title. */
+    private fun currentOwner(): String = settingsRepository.state.value.owner
+
     /**
      * Maps [date] to a [DailyUiState].
      *
@@ -118,7 +142,8 @@ class ScheduleViewModel(
                 group = null,
                 shift = null,
                 lessons = emptyList(),
-                message = DailyMessage.DATA_UNAVAILABLE
+                message = DailyMessage.DATA_UNAVAILABLE,
+                owner = currentOwner()
             )
         }
 
@@ -132,7 +157,8 @@ class ScheduleViewModel(
                 group = schedule.group,
                 shift = schedule.shift,
                 lessons = schedule.lessons,
-                message = DailyMessage.DATE_UNDETERMINED
+                message = DailyMessage.DATE_UNDETERMINED,
+                owner = currentOwner()
             )
         }
 
@@ -144,7 +170,8 @@ class ScheduleViewModel(
                 group = null,
                 shift = null,
                 lessons = emptyList(),
-                message = DailyMessage.WEEKEND
+                message = DailyMessage.WEEKEND,
+                owner = currentOwner()
             )
         }
 
@@ -156,7 +183,8 @@ class ScheduleViewModel(
                 group = schedule.group,
                 shift = schedule.shift,
                 lessons = emptyList(),
-                message = DailyMessage.NO_CLASSES
+                message = DailyMessage.NO_CLASSES,
+                owner = currentOwner()
             )
         }
 
@@ -167,7 +195,8 @@ class ScheduleViewModel(
             group = schedule.group,
             shift = schedule.shift,
             lessons = schedule.lessons,
-            message = null
+            message = null,
+            owner = currentOwner()
         )
     }
 
