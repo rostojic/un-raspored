@@ -24,7 +24,8 @@ class ScheduleService(private val repository: TimetableRepository) {
      * Weekends return an empty [DaySchedule] with `isWeekend = true` and null
      * group/shift. Weekdays resolve the group, shift and bell times, then map
      * each lesson (sorted ascending by period, Req 1.2) to a [ResolvedLesson]
-     * carrying the shift's start/end times (Req 1.1, 2.7).
+     * carrying the shift's start/end times (Req 1.1, 2.7). Pauses before the
+     * first and after the last taught period are dropped; see [trimEdgePauses].
      */
     fun scheduleFor(date: LocalDate): DaySchedule {
         val dow = date.dayOfWeek
@@ -38,10 +39,32 @@ class ScheduleService(private val repository: TimetableRepository) {
         val bells = repository.bellTimesFor(shift)              // Req 2.7 applies shift bell times
         val lessons = repository.lessonsFor(dow)                // fixed, WeekType-independent (Req 2.8)
             .sortedBy { it.period }                             // ascending order (Req 1.2)
+            .trimEdgePauses()                                   // pauses only between classes
             .map { l ->
                 val b = bells.getValue(l.period)
                 ResolvedLesson(l.period, l.classCode, b.start, b.end)
             }
         return DaySchedule(date, dow, false, group, weekType, shift, lessons)
+    }
+
+    /**
+     * Drops the pauses that sit before the first and after the last taught
+     * period of a day.
+     *
+     * A pause is only meaningful as a gap *between* classes. The schedule
+     * editor stores every weekday as all seven periods 1..7, padding the
+     * untaught ones with pauses, so without this trim a day that starts at
+     * period 6 would render five leading "no class" rows before its first
+     * actual slot. Interior pauses are preserved; a day with no taught period
+     * at all collapses to an empty list, which the Daily view reports as
+     * "no classes".
+     *
+     * The receiver is expected to already be sorted ascending by period.
+     */
+    private fun List<Lesson>.trimEdgePauses(): List<Lesson> {
+        val first = indexOfFirst { !it.isPause }
+        if (first < 0) return emptyList()
+        val last = indexOfLast { !it.isPause }
+        return subList(first, last + 1)
     }
 }
