@@ -141,7 +141,7 @@ fun DailyScreen(
         ) {
             DailyHeader(state)
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(8.dp))
 
             // Body: either a message (weekend / no classes / errors) or the period list.
             val message = state.message
@@ -162,7 +162,7 @@ fun DailyScreen(
                 )
             }
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(8.dp))
 
             NavigationControls(
                 onPreviousDay = onPreviousDay,
@@ -230,7 +230,7 @@ private fun LessonList(
 ) {
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(lessons, key = { it.period }) { lesson ->
             LessonRow(lesson)
@@ -248,17 +248,17 @@ private fun LessonRow(lesson: ResolvedLesson) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 16.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Period number.
             Text(
                 text = lesson.period.toString(),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.width(32.dp)
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.width(28.dp)
             )
 
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(12.dp))
 
             // Class code, or a visible "no class" indication for pauses. (Req 1.5)
             if (lesson.isPause) {
@@ -298,23 +298,32 @@ private fun NavigationControls(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp),
+                .height(40.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onPreviousDay) {
+            IconButton(
+                onClick = onPreviousDay,
+                modifier = Modifier.size(40.dp)
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = stringResource(R.string.action_previous_day)
                 )
             }
-            IconButton(onClick = onOpenCalendar) {
+            IconButton(
+                onClick = onOpenCalendar,
+                modifier = Modifier.size(40.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Filled.DateRange,
                     contentDescription = stringResource(R.string.action_open_calendar)
                 )
             }
-            IconButton(onClick = onNextDay) {
+            IconButton(
+                onClick = onNextDay,
+                modifier = Modifier.size(40.dp)
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = stringResource(R.string.action_next_day)

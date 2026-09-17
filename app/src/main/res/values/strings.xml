@@ -49,7 +49,7 @@
 
     <!-- Daily top app bar and overflow menu -->
     <string name="app_bar_title">Распоред</string>
-    <string name="app_bar_title_owner">Распоред-%1$s</string>
+    <string name="app_bar_title_owner">Распоред %1$s</string>
     <string name="action_menu">Мени</string>
     <string name="menu_settings">Подешавања</string>
     <string name="menu_edit_schedule">Измени распоред</string>
