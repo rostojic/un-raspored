@@ -36,7 +36,7 @@
     <string name="message_date_undetermined">Тренутни датум није могуће одредити.</string>
 
     <!-- Period row / pause (Cyrillic) -->
-    <string name="pause_label">Пауза (нема часа)</string>
+    <string name="pause_label">Пауза</string>
 
     <!-- Navigation controls (Cyrillic) -->
     <string name="action_previous_day">Претходни дан</string>
