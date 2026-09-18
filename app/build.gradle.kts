@@ -9,6 +9,17 @@ android {
     namespace = "com.ostojic.raspored"
     compileSdk = 35
 
+    signingConfigs {
+        create("release") {
+            val keystorePassword = System.getenv("RASPored_KEYSTORE_PASSWORD")
+                ?: error("Set RASPored_KEYSTORE_PASSWORD before building a release")
+            storeFile = rootProject.file("release-keystore.jks")
+            storePassword = keystorePassword
+            keyAlias = "raspored-release"
+            keyPassword = keystorePassword
+        }
+    }
+
     defaultConfig {
         applicationId = "com.ostojic.raspored"
         minSdk = 26
@@ -21,6 +32,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
